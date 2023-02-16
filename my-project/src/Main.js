@@ -25,10 +25,8 @@ const Main = () => {
         .then(r => {
           setError(false)
           setData(r.data)
-          console.log(data)
           data.map(item => {
-            setAudio(item.phonetics[2])
-            console.log(audio)
+            setAudio(item.phonetics)
             return
           })
         })
@@ -63,8 +61,19 @@ const Main = () => {
           >
             <img src={playImg} alt="" className="w-6 h-6" />
           </button>
-          <audio id="audio">
-            <source src={audio.audio} type="audio/mpeg" />
+          <audio
+            id="audio"
+            onPlay={() => {
+              console.log('começou')
+            }}
+          >
+            <source
+              src={audio.map(item => {
+                console.log(item.audio !== '')
+                return item.audio !== '' ? item.audio.trim(',', '') : ''
+              })}
+              type="audio/mpeg"
+            />
           </audio>
         </div>
       )}
