@@ -3,6 +3,9 @@ import { ReactComponent as Search } from './components/images/search.svg'
 import axios from 'axios'
 import playImg from './components/images/pLAY.png'
 
+const x = document.getElementById('audio')
+const url = document.getElementById('source')
+
 const Main = () => {
   const [data, setData] = React.useState()
   const [input, setInput] = React.useState('keyboard')
@@ -10,13 +13,14 @@ const Main = () => {
   const [audio, setAudio] = React.useState()
   const [play, setPlay] = React.useState(false)
 
-  const x = document.getElementById('audio')
-
   function handleChange(e) {
     setInput(e.target.value)
   }
-  function handleAudio() {
-    x.play()
+  function handleAudio(e) {
+    url.setAttribute('src', audio)
+    if (audio) {
+      x.play()
+    }
   }
   React.useEffect(() => {
     if (input) {
@@ -25,9 +29,9 @@ const Main = () => {
         .then(r => {
           setError(false)
           setData(r.data)
-          data.map(item => {
-            setAudio(item.phonetics)
-            return
+          r.data.map(item => {
+            item.phonetics.filter(item => setAudio(item.audio))
+            return true
           })
         })
         .catch(e => {
@@ -67,13 +71,7 @@ const Main = () => {
               console.log('começou')
             }}
           >
-            <source
-              src={audio.map(item => {
-                console.log(item.audio !== '')
-                return item.audio !== '' ? item.audio.trim(',', '') : ''
-              })}
-              type="audio/mpeg"
-            />
+            <source id="source" src={audio} type="audio/mpeg" />
           </audio>
         </div>
       )}
