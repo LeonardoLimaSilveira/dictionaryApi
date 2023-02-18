@@ -4,8 +4,9 @@ import axios from 'axios'
 import playImg from './components/images/pLAY.png'
 
 const x = document.getElementById('audio')
-const url = document.getElementById('source')
+const url = document.querySelector('source')
 
+console.log(url)
 const Main = () => {
   const [data, setData] = React.useState()
   const [input, setInput] = React.useState('keyboard')
@@ -16,29 +17,37 @@ const Main = () => {
   function handleChange(e) {
     setInput(e.target.value)
   }
-  function handleAudio(e) {
-    url.setAttribute('src', audio)
-    if (audio) {
-      x.play()
+  function handleAudio() {
+    async function tocar() {
+      if (audio) {
+        x.setAttribute('src', audio)
+
+        await x.play()
+      }
     }
+    console.log(x)
+    return tocar()
   }
   React.useEffect(() => {
-    if (input) {
-      axios
-        .get(`https://api.dictionaryapi.dev/api/v2/entries/en/${input}`)
-        .then(r => {
-          setError(false)
-          setData(r.data)
-          r.data.map(item => {
-            item.phonetics.filter(item => setAudio(item.audio))
-            return true
+    async function Fetch() {
+      if (input) {
+        axios
+          .get(`https://api.dictionaryapi.dev/api/v2/entries/en/${input}`)
+          .then(r => {
+            setError(false)
+            setData(r.data)
+            r.data.map(item => {
+              item.phonetics.filter(item => setAudio(item.audio))
+              return true
+            })
           })
-        })
-        .catch(e => {
-          setError(true)
-        })
+          .catch(e => {
+            setError(true)
+          })
+      }
     }
-  }, [input])
+    Fetch()
+  }, [, input])
 
   return (
     <div className="mt-24">
@@ -67,11 +76,12 @@ const Main = () => {
           </button>
           <audio
             id="audio"
+            src={audio}
             onPlay={() => {
               console.log('começou')
             }}
           >
-            <source id="source" src={audio} type="audio/mpeg" />
+            <source src={audio} />
           </audio>
         </div>
       )}
