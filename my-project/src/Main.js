@@ -48,7 +48,6 @@ const Main = () => {
           .then(r => {
             setError(false)
             setData(r.data)
-            console.log(data)
             r.data.map(item => {
               if (item.phonetics.length > 0) {
                 return item.phonetics.filter(item =>
@@ -106,8 +105,27 @@ const Main = () => {
             </audio>
           </div>
           <div className="grid grid-cols-12 items-center">
-            <span className="font-bold text-lg col-auto">noun</span>
-            <div className="h-[2px] w-[100%] bg-extendLightGray col-span-11 "></div>
+            <span className="font-bold text-xl col-auto italic">noun</span>
+            <div className="h-[1px] w-[100%] bg-extendLightGray opacity-50 col-span-11 "></div>
+          </div>
+          <div className="my-10 text-lg">
+            <h2 className="text-[#acacac]">Meaning</h2>
+            <ul className="max-w-[95%] mx-auto my-4 text-extendGrayText relative ">
+              {data[0].meanings.map(item => {
+                if (item.partOfSpeech.includes('noun')) {
+                  return item.definitions.map(item => {
+                    console.log(item)
+                    return (
+                      <li className="before:content-['\2022'] my-2 before:text-[#a545f2] before:-left-1 before:absolute before:font-bold text-justify max-w-[95%] mx-auto">
+                        <span className="text-[#2b2b2b]">
+                          {item.definition}
+                        </span>
+                      </li>
+                    )
+                  })
+                }
+              })}
+            </ul>
           </div>
         </div>
       )}
