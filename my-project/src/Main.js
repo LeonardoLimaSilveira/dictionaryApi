@@ -10,6 +10,7 @@ const Main = () => {
   const [error, setError] = React.useState(false)
   const [audio, setAudio] = React.useState([])
   const [play, setPlay] = React.useState(false)
+  const [partOfSpeech, setPartOfSpeech] = React.useState([])
 
   function handleChange(e) {
     setInput(e.target.value)
@@ -90,42 +91,122 @@ const Main = () => {
                 {data[0].phonetic}
               </p>
             </div>
-            <button
-              onClick={handleAudio}
-              className="w-[60px] h-[60px] my-auto rounded-full flex items-center justify-center bg-[#e9d0fa] hover:bg-[#D6b4ea] ease-out duration-300"
-            >
-              {play ? (
-                <MediaPause className="w-7 h-7" />
-              ) : (
-                <img src={playImg} alt="" className="w-7 h-7" />
-              )}
-            </button>
-            <audio id="audio" src={audio} onPlay={handlePlay} onEnded={stopped}>
-              <source src={audio} type="audio/mpeg" />
-            </audio>
+            {data[0].phonetics.length > 0 && (
+              <div>
+                {' '}
+                <button
+                  onClick={handleAudio}
+                  className="w-[60px] h-[60px] my-auto rounded-full flex items-center justify-center bg-[#e9d0fa] hover:bg-[#D6b4ea] ease-out duration-300"
+                >
+                  {play ? (
+                    <MediaPause className="w-7 h-7" />
+                  ) : (
+                    <img src={playImg} alt="" className="w-7 h-7" />
+                  )}
+                </button>
+                <audio
+                  id="audio"
+                  src={audio}
+                  onPlay={handlePlay}
+                  onEnded={stopped}
+                >
+                  <source src={audio} type="audio/mpeg" />
+                </audio>{' '}
+              </div>
+            )}
           </div>
-          <div className="grid grid-cols-12 items-center">
-            <span className="font-bold text-xl col-auto italic">noun</span>
-            <div className="h-[1px] w-[100%] bg-extendLightGray opacity-50 col-span-11 "></div>
-          </div>
-          <div className="my-10 text-lg">
-            <h2 className="text-[#acacac]">Meaning</h2>
-            <ul className="max-w-[95%] mx-auto my-4 text-extendGrayText relative ">
-              {data[0].meanings.map(item => {
-                if (item.partOfSpeech.includes('noun')) {
-                  return item.definitions.map(item => {
-                    console.log(item)
-                    return (
-                      <li className="before:content-['\2022'] my-2 before:text-[#a545f2] before:-left-1 before:absolute before:font-bold text-justify max-w-[95%] mx-auto">
-                        <span className="text-[#2b2b2b]">
-                          {item.definition}
-                        </span>
-                      </li>
-                    )
-                  })
-                }
+
+          <div className="">
+            <ul>
+              {data[0].meanings.map((item, index) => {
+                console.log(item, index)
+
+                return (
+                  <div key={index} className="my-10 text-lg">
+                    <div className="grid grid-cols-12 items-center">
+                      <span className="font-bold text-xl col-auto italic">
+                        {item.partOfSpeech}
+                      </span>
+                      <div className="h-[1px] w-[100%] bg-extendLightGray opacity-50 col-span-11 "></div>
+                      <h2 className="text-[#acacac] mt-6">Meaning</h2>
+                    </div>
+                    <ul className="max-w-[95%] mx-auto my-4 text-extendGrayText relative ">
+                      {item.definitions.slice(0, 4).map((item, index) => {
+                        return (
+                          <li
+                            key={index}
+                            className="before:content-['\2022'] my-2 before:text-[#a545f2] before:-left-1 before:absolute before:font-bold text-justify max-w-[95%] mx-auto"
+                          >
+                            <span className="text-[#2b2b2b]">
+                              {item.definition}
+                            </span>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </div>
+                )
+
+                // if (item.partOfSpeech.includes('noun')) {
+                //   return item.definitions.slice(0, 4).map((item, index) => {
+                //     return (
+                //       <li
+                //         key={index}
+                //         className="before:content-['\2022'] my-2 before:text-[#a545f2] before:-left-1 before:absolute before:font-bold text-justify max-w-[95%] mx-auto"
+                //       >
+                // <span className="text-[#2b2b2b]">
+                //   {item.definition}
+                // </span>
+                //       </li>
+                //     )
+                //   })
+                // }
               })}
             </ul>
+            <div className="my-14 text-lg">
+              <span className="text-[#acacac] mr-7">
+                {data[0].meanings[0].synonyms.length > 0 && 'Synonyms'}
+              </span>
+              <h2 className="text-[#a545f2] font-bold inline">
+                {data[0].meanings.map((item, index) => {
+                  if (item.partOfSpeech.includes('noun')) {
+                    return item.synonyms.slice(0, 4).map(item => (
+                      <span key={index} className="ml-2">
+                        {item} |
+                      </span>
+                    ))
+                  }
+                })}
+              </h2>
+            </div>
+            <div className="grid grid-cols-12 items-center mt-5">
+              <span className="font-bold text-xl col-auto italic">verb</span>
+              <div className="h-[1px] w-[100%] bg-extendLightGray opacity-50 col-span-11 "></div>
+            </div>
+            <div className="my-10">
+              <h2 className="text-[#acacac]">Meaning</h2>
+              <ul className="max-w-[95%] mx-auto my-4 text-extendGrayText relative ">
+                {data[0].meanings.map(item => {
+                  if (item.partOfSpeech.includes('verb')) {
+                    return item.definitions.slice(0, 2).map((item, index) => {
+                      return (
+                        <li
+                          key={index}
+                          className="before:content-['\2022'] my-2 before:text-[#a545f2] before:-left-1 before:absolute before:font-bold text-justify max-w-[95%] mx-auto"
+                        >
+                          <span className="text-[#2b2b2b]">
+                            {item.definition}
+                          </span>
+                          <p className="mt-2 mb-8 text-[#acacac] text-base">
+                            {item.example && `"${item.example}"`}
+                          </p>
+                        </li>
+                      )
+                    })
+                  }
+                })}
+              </ul>
+            </div>
           </div>
         </div>
       )}
