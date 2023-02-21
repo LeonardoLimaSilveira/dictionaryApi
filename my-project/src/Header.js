@@ -8,13 +8,13 @@ const Header = () => {
   return (
     <div className="flex items-center justify-between h-16">
       <div>
-        <img src={book} alt="book image" className="w-10 h-10" />
+        <img src={book} alt="book" className="w-10 h-10" />
       </div>
       <div className="flex items-center">
         <div>
           <Space wrap>
             <Select
-              defaultValue="sans"
+              defaultValue="serif"
               style={{ width: 120 }}
               bordered={false}
               options={[
@@ -26,7 +26,7 @@ const Header = () => {
           </Space>
         </div>
         <div className="flex items-center">
-          <Switch className="ml-3 mr-2" />
+          <Switch className="ml-3 mr-2"></Switch>
           <BsMoon />
         </div>
       </div>
