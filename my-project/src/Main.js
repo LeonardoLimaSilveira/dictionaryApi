@@ -4,6 +4,7 @@ import axios from 'axios'
 import playImg from './components/images/pLAY.png'
 import { ReactComponent as MediaPause } from './components/images/mediaPause.svg'
 import { ReactComponent as Link } from './components/images/link.svg'
+import { GlobalContext } from './useContext'
 
 const Main = () => {
   const [data, setData] = React.useState()
@@ -12,7 +13,7 @@ const Main = () => {
   const [audio, setAudio] = React.useState([])
   const [play, setPlay] = React.useState(false)
   const [loading, setLoading] = React.useState(true)
-
+  const { theme: dark } = React.useContext(GlobalContext)
   function handleChange(e) {
     setInput(e.target.value)
   }
@@ -69,7 +70,7 @@ const Main = () => {
   }, [input])
 
   return (
-    <div className="mt-24">
+    <div className={`mt-24 ${window.localStorage.getItem('font')} `}>
       <div className="flex items-center justify-between bg-[#f4f4f4] h-16 rounded-3xl">
         <input
           type="text"
