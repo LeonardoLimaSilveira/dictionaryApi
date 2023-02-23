@@ -1,32 +1,36 @@
 import React from 'react'
 import Switch from '@mui/material/Switch'
 import { Select, Space } from 'antd'
-import book from './components/images/book.png'
 import Moon from './components/images/Moon'
 import { GlobalContext } from './useContext'
+import Book from './components/images/Book'
 
 const Header = () => {
   const { theme, setTheme, setFont } = React.useContext(GlobalContext)
 
   React.useEffect(() => {
     if (theme) {
-      return document.querySelector('body').classList.add(`dark`, `bg-black`)
+      return document
+        .querySelector('body')
+        .classList.add(`dark`, `bg-[#050505]`)
     } else {
-      return document.querySelector('body').classList.remove(`dark`, `bg-black`)
+      return document
+        .querySelector('body')
+        .classList.remove(`dark`, `bg-[#050505]`)
     }
   }, [theme])
 
   return (
     <div className="flex items-center justify-between h-16">
       <div>
-        <img src={book} alt="book" className="w-10 h-10" />
+        <Book color={theme ? '#5b5a5a' : '#000'} className="w-12 h-w-12 " />
       </div>
       <div className="flex items-center">
         <div>
           <Space wrap className=" ">
             <Select
               className="dark:text-white dark:bg-[#ffffff]  dark:rounded-xl "
-              defaultValue="serif"
+              defaultValue="Serif"
               style={{ width: 120 }}
               onChange={e => {
                 window.localStorage.setItem('font', `${e}`)
