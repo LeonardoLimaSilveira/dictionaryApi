@@ -5,6 +5,7 @@ module.exports = {
     './src/**/*.{js,jsx,ts,tsx}',
     'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'
   ],
+
   theme: {
     extend: {
       colors: {
@@ -13,6 +14,9 @@ module.exports = {
         extendLightPurple: '#a274c8',
         extendLightGray: '#c7c7c7',
         extendGrayText: '#797979'
+      },
+      screens: {
+        xsm: { max: '378px' }
       }
     }
   },

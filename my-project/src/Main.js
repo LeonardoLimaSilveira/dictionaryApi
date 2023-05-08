@@ -69,7 +69,11 @@ const Main = () => {
   }, [input])
 
   return (
-    <div className={`mt-24 ${window.localStorage.getItem('font')} `}>
+    <div
+      className={`mt-24 ${window.localStorage.getItem(
+        'font'
+      )} xsm:max-w-[90%] xsm:mx-auto `}
+    >
       <div className="flex items-center justify-between bg-[#f4f4f4] h-16 rounded-3xl dark:bg-[#404040]">
         <input
           type="text"
@@ -89,7 +93,9 @@ const Main = () => {
         <div>
           <div className="flex justify-between items my-6 py-8">
             <div>
-              <h1 className="font-bold text-7xl">{data[0].word}</h1>
+              <h1 className="font-bold text-7xl xsm:text-5xl">
+                {data[0].word}
+              </h1>
               <p className="mt-4 text-lg text-extendPurple">
                 {data[0].phonetic}
               </p>
@@ -99,7 +105,7 @@ const Main = () => {
                 {' '}
                 <button
                   onClick={handleAudio}
-                  className="w-[60px] h-[60px] my-auto rounded-full flex items-center justify-center bg-[#e9d0fa] hover:bg-[#D6b4ea] ease-out duration-300"
+                  className="w-[60px] h-[60px] my-auto rounded-full flex items-center justify-center bg-[#e9d0fa] hover:bg-[#D6b4ea] ease-out duration-300 xsm:w-[50px] xsm:h-[50px]"
                 >
                   {play ? (
                     <MediaPause className="w-7 h-7" />
@@ -182,10 +188,10 @@ const Main = () => {
           {data[0].sourceUrls &&
             data[0].sourceUrls.slice(0, 1).map(item => {
               return (
-                <div key={item} className="flex items-center ">
+                <div key={item} className="flex items-center xsm:flex-col">
                   <span className="text-[#acacac] text-md">Source</span>
                   <a
-                    className="flex ml-3 items-center text-base text-[#2b2b2b] underline dark:text-[#a5a5a5]"
+                    className="flex ml-3 items-center text-base text-[#2b2b2b] underline dark:text-[#a5a5a5] xsm:text-sm"
                     href={item}
                     target="_blank"
                     rel="noreferrer"

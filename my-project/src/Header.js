@@ -21,8 +21,8 @@ const Header = () => {
   }, [theme])
 
   return (
-    <div className="flex items-center justify-between h-16">
-      <div>
+    <div className="flex items-center justify-between h-16 xsm:max-w-[90%] xsm:mx-auto">
+      <div className="  ">
         <Book color={theme ? '#5b5a5a' : '#000'} className="w-12 h-w-12 " />
       </div>
       <div className="flex items-center">
@@ -45,6 +45,7 @@ const Header = () => {
             />
           </Space>
         </div>
+
         <div className="flex items-center">
           <Switch
             className="ml-3 mr-2"
